@@ -5,6 +5,6 @@
     [active]="track.id === selectedId()"
     (select)="selectedId.set($event.id)" />
 } @empty {
-  <p>Aucun morceau.</p>
+  <p class="empty">Aucun morceau.</p>
 }
 </section>
