@@ -1,6 +1,7 @@
 <article
   class="card"
   [class.active]="active()"
+  [appHighlightFavorite]="track().favorite"
   (click)="select.emit(track())">
   <div class="cover">
     <img [src]="track().coverUrl" [alt]="track().title" loading="lazy" />
@@ -10,8 +11,14 @@
     <p class="artist">{{ track().artist }}</p>
     <div class="meta">
       <span class="year">{{ track().year }}</span>
+      <span class="duration">{{ track().durationSeconds | durationFormat }}</span>
+      @switch (true) {
+        @case (track().rating >= 9) { <span class="badge gold">⭐ Coup de cœur</span> }
+        @case (track().rating >= 7) { <span class="badge">👍 Recommandé</span> }
+        @default { <span class="badge muted">À découvrir</span> }
+      }
       @if (active()) {
-        <span class="badge">En lecture</span>
+        <span class="badge-selected">En lecture</span>
       }
     </div>
   </div>

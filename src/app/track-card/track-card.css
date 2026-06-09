@@ -73,6 +73,16 @@
   background: var(--accent-light);
 }
 
+.badge-selected {
+  margin-top: var(--space-2);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  color: white;
+  background: green;
+}
+
 .year {
   font-size: 0.75rem;
   color: var(--text-light);

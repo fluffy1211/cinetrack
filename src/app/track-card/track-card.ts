@@ -1,10 +1,12 @@
 import { Component, input, output } from '@angular/core';
 import { Track } from '../models/track';
-
+import { DurationFormatPipe } from '../pipes/duration-format-pipe';
+import { HighlightFavorite } from '../directives/highlight-favorite';
 @Component({
   selector: 'app-track-card',
   templateUrl: './track-card.html',
-  styleUrl: './track-card.css'
+  styleUrl: './track-card.css',
+  imports: [DurationFormatPipe, HighlightFavorite],
 })
 export class TrackCard {
   track = input.required<Track>();
