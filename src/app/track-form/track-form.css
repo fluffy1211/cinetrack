@@ -1,0 +1,84 @@
+:host {
+  display: block;
+  padding: var(--space-10) var(--space-6);
+}
+
+form {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-weight: 500;
+  font-size: 0.9375rem;
+}
+
+input {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-light);
+}
+
+input:disabled {
+  background-color: var(--border);
+  color: var(--text-light);
+  cursor: not-allowed;
+}
+
+input[type='number'] {
+  font-variant-numeric: tabular-nums;
+}
+
+.error {
+  color: #dc2626;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  display: block;
+}
+
+button {
+  padding: var(--space-3) var(--space-6);
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), opacity var(--transition);
+  margin-top: var(--space-4);
+}
+
+button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+button:active:not(:disabled) {
+  background: #1e40af;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
