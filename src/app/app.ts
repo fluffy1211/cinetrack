@@ -2,17 +2,20 @@ import { Component, inject, signal } from '@angular/core';
 import { TrackList } from './track-list/track-list';
 import { Track } from './models/track';
 import { TrackForm } from './track-form/track-form';
-import { TrackDetail } from './track-detail/track-detail';
-import { Login } from "./login/login";
 import { TrackService } from './services/track.service';
+import { TrackDetail } from './track-detail/track-detail';
+import { TrackSearch } from './track-search/track-search';
+import { Login } from './login/login';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
-  imports: [TrackList, TrackForm, Login],
+  imports: [TrackList, TrackForm, TrackDetail, TrackSearch, Login],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
+  protected authService = inject(AuthService);
   private trackService = inject(TrackService);
   protected tracks = signal<Track[]>([]);
 
