@@ -19,7 +19,7 @@ export class Login {
   protected error = signal<string | null>(null);
   protected loading = signal(false);
 
-  onSubmit(event: Event) {
+  protected onSubmit(event: Event) {
     event.preventDefault();
     if (!this.loginForm().valid()) return;
 

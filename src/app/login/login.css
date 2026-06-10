@@ -52,7 +52,7 @@ input:focus {
 }
 
 .error {
-  color: #dc2626;
+  color: var(--error);
   font-size: 0.8125rem;
   font-weight: 500;
   margin: 0;

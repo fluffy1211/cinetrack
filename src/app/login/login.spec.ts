@@ -52,6 +52,6 @@ describe('Login', () => {
     fixture.detectChanges();
 
     const errorEl = el.querySelector('.error');
-    expect(errorEl?.textContent).toBeTruthy();
+    expect(errorEl?.textContent?.trim()).toBe('Email ou mot de passe incorrect.');
   });
 });
