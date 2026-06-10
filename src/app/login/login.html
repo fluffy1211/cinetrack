@@ -1,0 +1,26 @@
+<div class="card">
+  <h1>Cin<em>é</em>Track</h1>
+  <form novalidate (submit)="onSubmit($event)">
+    <label>Email
+      <input type="email" [formField]="loginForm.email" autocomplete="email" />
+    </label>
+    @if (loginForm.email().touched() && !loginForm.email().valid()) {
+      <small class="error">{{ loginForm.email().errors()[0]?.message }}</small>
+    }
+
+    <label>Mot de passe
+      <input type="password" [formField]="loginForm.password" autocomplete="current-password" />
+    </label>
+    @if (loginForm.password().touched() && !loginForm.password().valid()) {
+      <small class="error">{{ loginForm.password().errors()[0]?.message }}</small>
+    }
+
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+
+    <button type="submit" [disabled]="loading()">
+      {{ loading() ? 'Connexion…' : 'Se connecter' }}
+    </button>
+  </form>
+</div>
