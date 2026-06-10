@@ -1,13 +1,9 @@
-@if (authService.isLoggedIn()) {
-  <header>
-    <h1>Cin<em>é</em>Track</h1>
-    <p class="subtitle">Collection &middot; {{ tracks().length }} morceaux</p>
-    <app-track-detail />
-    <app-track-search />
-    <button class="logout" (click)="authService.logout()">Déconnexion</button>
-  </header>
-  <app-track-form (trackSubmitted)="onTrackSubmitted($event)" />
-  <app-track-list [tracks]="tracks()" />
-} @else {
-  <app-login />
-}
+<app-login />
+<header>
+  <h1>Cin<em>é</em>Track</h1>
+  <p class="subtitle">Collection &middot; {{ tracks().length }} morceaux</p>
+  <app-track-detail />
+  <app-track-search />
+</header>
+<app-track-form (trackSubmitted)="onTrackSubmitted($event)" />
+<app-track-list [tracks]="tracks()" />
