@@ -1,9 +1,24 @@
-<app-login />
 <header>
-  <h1>Cin<em>é</em>Track</h1>
-  <p class="subtitle">Collection &middot; {{ tracks().length }} morceaux</p>
-  <app-track-detail />
-  <app-track-search />
+  <h1>CinéTrack</h1>
+  <nav>
+    <a routerLink="/tracks" routerLinkActive="active">Catalogue</a>
+    @if (auth.isLoggedIn()) {
+      <a routerLink="/tracks/new" routerLinkActive="active">Ajouter</a>
+    }
+    @if (auth.isLoggedIn() && featFavorites) {
+      <a routerLink="/favorites" routerLinkActive="active">Favoris</a>
+    }
+  </nav>
+
+  <div class="auth-panel">
+    @if (auth.isLoggedIn()) {
+      <span>Connecté{{ auth.user()?.name ? ' · ' + auth.user()?.name : '' }}</span>
+      <button type="button" (click)="auth.logout()">Se déconnecter</button>
+    } @else {
+      <a routerLink="/login" routerLinkActive="active">Se connecter</a>
+    }
+  </div>
 </header>
-<app-track-form (trackSubmitted)="onTrackSubmitted($event)" />
-<app-track-list [tracks]="tracks()" />
+
+<!-- la vue de la route active s'affiche ici -->
+<router-outlet />

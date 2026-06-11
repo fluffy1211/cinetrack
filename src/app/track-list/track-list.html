@@ -1,3 +1,6 @@
+@if (auth.isLoggedIn()) {
+  <a routerLink="/tracks/new" class="btn-add">Ajouter</a>
+}
 <input
   type="search"
   placeholder="Rechercher un titre ou un artiste…"
@@ -9,7 +12,9 @@
   <app-track-card
     [track]="track"
     [active]="track.id === selectedId()"
-    (select)="selectedId.set($event.id)" />
+    [showFavorite]="featFavorites && auth.isLoggedIn()"
+    (select)="selectedId.set($event.id)"
+    (favoriteToggle)="onFavoriteToggle($event)" />
 } @empty {
   <p class="empty">{{ searchTerm() ? 'Aucun résultat pour « ' + searchTerm() + ' ».' : 'Aucun morceau.' }}</p>
 }

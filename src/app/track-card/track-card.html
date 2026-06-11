@@ -21,5 +21,13 @@
         <span class="badge-selected">En lecture</span>
       }
     </div>
+    <div class="actions">
+      <a [routerLink]="['/tracks', track().id]" class="btn-action" (click)="$event.stopPropagation()">Voir</a>
+      @if (showFavorite()) {
+        <button type="button" class="btn-action" [class.favorite-active]="track().favorite" (click)="onFavoriteClick($event)">
+          {{ track().favorite ? '★' : '☆' }} Favori
+        </button>
+      }
+    </div>
   </div>
 </article>

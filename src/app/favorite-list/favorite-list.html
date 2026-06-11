@@ -1,0 +1,12 @@
+<h2>Mes favoris</h2>
+
+<section class="grid">
+@for (track of favorites(); track track.id) {
+  <app-track-card
+    [track]="track"
+    [showFavorite]="true"
+    (favoriteToggle)="onFavoriteToggle($event)" />
+} @empty {
+  <p class="empty">Aucun favori pour l'instant.</p>
+}
+</section>

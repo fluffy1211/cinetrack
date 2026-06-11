@@ -1,3 +1,23 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './guards/auth-guard';
+import { environment } from '../environments/environment';
 
-export const routes: Routes = [];
+const favoritesRoute = environment.featFavorites
+  ? {
+      path: 'favorites',
+      canActivate: [authGuard],
+      loadComponent: () => import('./favorite-list/favorite-list').then(m => m.FavoriteList),
+    }
+  : { path: 'favorites', redirectTo: 'tracks', pathMatch: 'full' as const };
+
+export const routes: Routes = [
+  { path: '', redirectTo: 'tracks', pathMatch: 'full' },
+  { path: 'tracks', loadComponent: () => import('./track-list/track-list').then((m) => m.TrackList) },
+  { path: 'tracks/new', canActivate: [authGuard],
+    loadComponent: () => import('./track-form/track-form').then((m) => m.TrackForm) },
+  { path: 'tracks/:id', loadComponent: () => import('./track-detail/track-detail').then((m) => m.TrackDetail) },
+  { path: 'tracks/:id/edit', canActivate: [authGuard],
+    loadComponent: () => import('./track-form/track-form').then((m) => m.TrackForm) },
+  favoritesRoute,
+  { path: 'login', loadComponent: () => import('./login/login').then((m) => m.Login) },
+];
