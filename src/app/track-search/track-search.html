@@ -1,1 +1,4 @@
-<p>track-search works!</p>
+<input (input)="term.set($any($event.target).value)" placeholder="Rechercher…" />
+@for (t of results(); track t.id) {
+  <p>{{ t.title }}</p>
+}
