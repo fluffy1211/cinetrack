@@ -1,7 +1,15 @@
+// src/main.ts — on ajoute le routeur (+ binding des params vers les inputs)
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { App } from './app/app';
+import { authInterceptor } from './app/interceptors/auth-interceptor';
+import { routes } from './app/app.routes';
+import { errorInterceptor } from './app/interceptors/error-interceptor';
 
 bootstrapApplication(App, {
-  providers: [provideHttpClient()],
+  providers: [
+    provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
+    provideRouter(routes, withComponentInputBinding()),
+  ],
 });
