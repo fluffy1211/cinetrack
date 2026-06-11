@@ -1,7 +1,8 @@
-// track-form.ts
-import { Component, signal, output } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { form, FormField, required, min, max } from '@angular/forms/signals';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Track } from '../models/track';
+import { TrackService } from '../services/track.service';
 
 @Component({
   selector: 'app-track-form',
@@ -10,6 +11,11 @@ import { Track } from '../models/track';
   styleUrl: './track-form.css'
 })
 export class TrackForm {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private trackService = inject(TrackService);
+
+  protected editId = this.route.snapshot.paramMap.get('id');
   protected model = signal({ title: '', artist: '', rating: 5 });
 
   protected trackForm = form(this.model, (path) => {
@@ -19,26 +25,31 @@ export class TrackForm {
     max(path.rating, 10);
   });
 
-  trackSubmitted = output<Track>();
+  constructor() {
+    if (this.editId) {
+      this.trackService.getTrack(Number(this.editId)).subscribe(track => {
+        this.model.set({ title: track.title, artist: track.artist, rating: track.rating });
+      });
+    }
+  }
 
-  onSubmit(event: Event) {
+  protected save(event: Event) {
     event.preventDefault();
-    if (this.trackForm().valid()) {
-      const data = this.model();
-      const newTrack: Track = {
-        id: Date.now(),
-        title: data.title,
-        artist: data.artist,
-        rating: data.rating,
-        album: '',
-        genre: '',
-        durationSeconds: 0,
-        year: new Date().getFullYear(),
-        favorite: false,
-        coverUrl: 'https://picsum.photos/seed/' + Date.now() + '/300'
+    if (!this.trackForm().valid()) return;
+    const { title, artist, rating } = this.model();
+    if (this.editId) {
+      this.trackService.update(Number(this.editId), { title, artist, rating }).subscribe(() => {
+        this.router.navigate(['/tracks']);
+      });
+    } else {
+      const payload: Omit<Track, 'id'> = {
+        title, artist, rating,
+        album: '', genre: '', durationSeconds: 0,
+        year: new Date().getFullYear(), favorite: false, coverUrl: ''
       };
-      this.trackSubmitted.emit(newTrack);
-      this.model.set({ title: '', artist: '', rating: 5 });
+      this.trackService.create(payload).subscribe(() => {
+        this.router.navigate(['/tracks']);
+      });
     }
   }
 }
