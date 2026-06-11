@@ -1,6 +1,9 @@
 @if (track(); as t) {
-  <h2>{{ t.title }} — {{ t.artist }}</h2>
-  <p>{{ t.album }} ({{ t.year }})</p>
-} @else {
-  <p>Chargement…</p>
+  <div class="track-detail">
+    <h2>{{ t.title }}</h2>
+    <p>{{ t.artist }} &mdash; {{ t.album }}</p>
+    <img [src]="t.coverUrl" alt="Pochette de {{ t.title }}" />
+    <a [routerLink]="['/tracks', t.id, 'edit']">Modifier</a>
+    <button (click)="delete()">Supprimer</button>
+  </div>
 }
